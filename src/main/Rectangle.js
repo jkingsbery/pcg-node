@@ -1,3 +1,11 @@
+var srand = require("srand");
+srand.seed(42);
+
+srand.randInt = function randInt(max){
+    return Math.floor(srand.random()*max);
+};
+
+
 var Rectangle=function Rectangle( top,  left,  bottom,  right){
     this.top=top;
     this.left=left;
@@ -31,9 +39,25 @@ Rectangle.prototype.partitionQuad = function(){
     this.parts[3] = new Rectangle(horizontalMiddle+1,verticalMiddle+1,this.bottom,this.right);
 };
 
+Rectangle.prototype.getWidth = function(){
+    return this.right - this.left;
+};
+
+Rectangle.prototype.getHeight = function(){
+    return this.bottom - this.top;
+}
+
+Rectangle.prototype.getArea = function(){
+    return this.getWidth() * this.getHeight();
+}
+
 Rectangle.prototype.fillRoom = function(){
-    var boundary=20;
-    this.room = new Rectangle(this.top+boundary,this.left+boundary,this.bottom-boundary,this.right-boundary);
+    //    var boundary=20;
+    
+    //this.room = new Rectangle(this.top+boundary,this.left+boundary,this.bottom-boundary,this.right-boundary);
+    var x=Math.floor(this.getWidth()*0.3);
+    this.room = new Rectangle(this.top+srand.randInt(x)+1,this.left+srand.randInt(x)+1,
+			      this.bottom-srand.randInt(x)+1,this.right-srand.randInt(x)+1);
 };
 
 Rectangle.prototype.equals = function(other){
