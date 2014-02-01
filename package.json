@@ -1,0 +1,12 @@
+{
+  "name": "pcg-node",
+  "description": "",
+  "author": "06jameskingsbery@gmail.com",
+  "dependencies": {
+    "srand": ">= 0.0.1",
+    "canvas": ">= 0.0.1"
+  },
+  "devDependencies": {
+    "nodeunit": ">= 0.0.1"
+  }
+}
