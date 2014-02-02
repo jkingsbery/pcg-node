@@ -39,6 +39,18 @@ Rectangle.prototype.partitionQuad = function(){
     this.parts[3] = new Rectangle(horizontalMiddle+1,verticalMiddle+1,this.bottom,this.right);
 };
 
+Rectangle.prototype.allChildrenAreLeaves = function(){
+    var x = true;
+    for(var i=0; i<this.parts.length; i++){
+	x = x && this.parts[i].leaf;
+    }
+    return x;
+};
+
+Rectangle.prototype.hasChildren = function(){
+    return this.parts != null;
+}
+
 Rectangle.prototype.getWidth = function(){
     return this.right - this.left;
 };
@@ -55,9 +67,12 @@ Rectangle.prototype.fillRoom = function(){
     //    var boundary=20;
     
     //this.room = new Rectangle(this.top+boundary,this.left+boundary,this.bottom-boundary,this.right-boundary);
-    var x=Math.floor(this.getWidth()*0.3);
-    this.room = new Rectangle(this.top+srand.randInt(x)+1,this.left+srand.randInt(x)+1,
-			      this.bottom-srand.randInt(x)+1,this.right-srand.randInt(x)+1);
+    if(!this.room){
+	var x=Math.floor(this.getWidth()*0.3);
+	this.room = new Rectangle(this.top+srand.randInt(x)+1,this.left+srand.randInt(x)+1,
+				  this.bottom-srand.randInt(x)+1,this.right-srand.randInt(x)+1);
+    }
+    return this.room;
 };
 
 Rectangle.prototype.equals = function(other){
