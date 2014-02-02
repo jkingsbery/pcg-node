@@ -39,8 +39,8 @@ function writeToFile(canvas){
 }
 
 var main = function(){
-    var dungeon = new Dungeon(2000);
-    partition.randomParts(dungeon.rectangle,2);
+    var dungeon = new Dungeon(5000);
+    partition.randomParts(dungeon.rectangle,4);
     var canvas = drawRooms(dungeon);
     writeToFile(canvas);
 };

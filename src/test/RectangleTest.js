@@ -9,3 +9,13 @@ exports.testQuadPartition = function(test){
     test.ok(rect.parts[3].equals(new Rectangle(251,751,500,1000)));
     test.done();
 };
+
+exports.testChildren = function(test){
+    var rect = new Rectangle(0,0,1000,1000);
+    rect.partitionQuad();
+    for(var i=0; i<rect.parts.length-1; i++){
+	rect.partitionQuad();
+    }
+    console.log(rect.getBottomChildren());
+    test.done();
+};

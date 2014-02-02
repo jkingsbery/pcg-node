@@ -67,7 +67,10 @@ Rectangle.prototype.getLeftChildren = function(){
     if(this.leaf == true){
 	return [this];
     }else{
-	return [this.parts[0],this.parts[2]];
+	var result=[];
+	result = result.concat(this.parts[0].getLeftChildren());
+	result = result.concat(this.parts[2].getLeftChildren());
+	return result;
     }
 };
 
@@ -75,8 +78,11 @@ Rectangle.prototype.getLeftChildren = function(){
 Rectangle.prototype.getRightChildren = function(){
     if(this.leaf == true){
 	return [this];
-    }else{
-	return [this.parts[1],this.parts[3]];
+    }else{	
+	var result=[];
+	result = result.concat(this.parts[1].getRightChildren());
+	result = result.concat(this.parts[3].getRightChildren());
+	return result;
     }
 };
 
@@ -85,7 +91,10 @@ Rectangle.prototype.getTopChildren = function(){
     if(this.leaf == true){
 	return [this];
     }else{
-	return [this.parts[0],this.parts[1]];
+	var result=[];
+	result = result.concat(this.parts[0].getTopChildren());
+	result = result.concat(this.parts[1].getTopChildren());
+	return result;
     }
 };
 
@@ -93,7 +102,10 @@ Rectangle.prototype.getBottomChildren = function(){
     if(this.leaf == true){
 	return [this];
     }else{
-	return [this.parts[2],this.parts[3]];
+	var result=[];
+	result = result.concat(this.parts[2].getBottomChildren());
+	result = result.concat(this.parts[3].getBottomChildren());
+	return result;
     }
 };
 
