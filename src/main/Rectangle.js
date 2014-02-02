@@ -5,7 +5,6 @@ srand.randInt = function randInt(max){
     return Math.floor(srand.random()*max);
 };
 
-
 var Rectangle=function Rectangle( top,  left,  bottom,  right){
     this.top=top;
     this.left=left;
@@ -57,11 +56,47 @@ Rectangle.prototype.getWidth = function(){
 
 Rectangle.prototype.getHeight = function(){
     return this.bottom - this.top;
-}
+};
 
 Rectangle.prototype.getArea = function(){
     return this.getWidth() * this.getHeight();
-}
+};
+
+
+Rectangle.prototype.getLeftChildren = function(){
+    if(this.leaf == true){
+	return [this];
+    }else{
+	return [this.parts[0],this.parts[2]];
+    }
+};
+
+
+Rectangle.prototype.getRightChildren = function(){
+    if(this.leaf == true){
+	return [this];
+    }else{
+	return [this.parts[1],this.parts[3]];
+    }
+};
+
+
+Rectangle.prototype.getTopChildren = function(){
+    if(this.leaf == true){
+	return [this];
+    }else{
+	return [this.parts[0],this.parts[1]];
+    }
+};
+
+Rectangle.prototype.getBottomChildren = function(){
+    if(this.leaf == true){
+	return [this];
+    }else{
+	return [this.parts[2],this.parts[3]];
+    }
+};
+
 
 Rectangle.prototype.fillRoom = function(){
     //    var boundary=20;

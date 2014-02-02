@@ -8,7 +8,7 @@ var partition = require("./RoomPartitionStrategy");
 
 function drawRooms(dungeon){
     var rooms = dungeon.getRooms();
-    console.log(rooms);
+    //console.log(rooms);
     var canvas = new Canvas(dungeon.size,dungeon.size);
     var ctx = canvas.getContext('2d');    
     ctx.strokeStyle = 'rgba(0,0,0,0.5)';
@@ -18,7 +18,7 @@ function drawRooms(dungeon){
 	ctx.fillRect(rooms[i].left,rooms[i].top,width,height);
     }
     var corridors = dungeon.getCorridors();
-    console.log(corridors);
+    //console.log(corridors);
     for(var i=0; i<corridors.length; i++){
 	ctx.fillRect(corridors[i].left,corridors[i].top,
 		     corridors[i].width,corridors[i].height);
@@ -39,9 +39,8 @@ function writeToFile(canvas){
 }
 
 var main = function(){
-    var dungeon = new Dungeon(5000);
-    partition.randomParts(dungeon.rectangle,3);
-    console.log(dungeon.rectangle.allChildrenAreLeaves());
+    var dungeon = new Dungeon(2000);
+    partition.randomParts(dungeon.rectangle,2);
     var canvas = drawRooms(dungeon);
     writeToFile(canvas);
 };

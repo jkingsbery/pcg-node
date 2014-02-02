@@ -33,17 +33,40 @@ function verticalCorridor(topRoom,bottomRoom){
     }
 }
 
+
+function horizontalConnectComponents(leftPart,rightPart){
+    var a = leftPart.getRightChildren();
+    var b = rightPart.getLeftChildren();
+    return horizontalCorridor(a[0],b[0]);
+}
+
+function verticalConnectComponents(topPart,bottomPart){
+    var a = topPart.getBottomChildren();
+    var b = bottomPart.getTopChildren();
+    return verticalCorridor(a[0],b[0]);
+}
+
 function getCorridorHelper(room){
     var corridors = [];
-    if(room.hasChildren() && !room.allChildrenAreLeaves()){
-	for(var i=0; i < room.parts.length; i++){
-	    corridors = corridors.concat(getCorridorHelper(room.parts[i]));
+    if(!room.leaf){
+	if(!room.allChildrenAreLeaves()){
+	    //First, have children rooms connected
+	    for(var i=0; i < room.parts.length; i++){
+		corridors = corridors.concat(getCorridorHelper(room.parts[i]));
+	    }
+	    //Second, connect children nodes
+	    //Horizontal:
+	    //First, get right members of left set of rooms, and left members of right set
+	    corridors.push(horizontalConnectComponents(room.parts[0],room.parts[1]));
+	    corridors.push(horizontalConnectComponents(room.parts[2],room.parts[3]));
+	    corridors.push(verticalConnectComponents(room.parts[0],room.parts[2]));
+	    corridors.push(verticalConnectComponents(room.parts[1],room.parts[3]));
+	}else {
+	    corridors.push(horizontalCorridor(room.parts[0],room.parts[1]));
+	    corridors.push(horizontalCorridor(room.parts[2],room.parts[3]));
+	    corridors.push(verticalCorridor(room.parts[0],room.parts[2]));
+	    corridors.push(verticalCorridor(room.parts[1],room.parts[3]));
 	}
-    }else if(!room.leaf){
-	corridors.push(horizontalCorridor(room.parts[0],room.parts[1]));
-	corridors.push(horizontalCorridor(room.parts[2],room.parts[3]));
-	corridors.push(verticalCorridor(room.parts[0],room.parts[2]));
-	corridors.push(verticalCorridor(room.parts[1],room.parts[3]));
     }
     return corridors;
 }
