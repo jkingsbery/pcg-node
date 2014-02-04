@@ -1,6 +1,5 @@
 var util=require("util");
 
-
 var BaseState = function BaseState(){
 
 };
@@ -20,15 +19,16 @@ BaseState.prototype.returnTo = function(who){
 /*
  ToDefeatState
  */
-var ToDefeatState = function ToDefeat(target) {
-    this.target=target;
+var ToDefeatState = function ToDefeat(mission) {
+    this.target=mission.target;
+    this.mission = mission;
 };
 
 util.inherits(ToDefeatState,BaseState);
 
 ToDefeatState.prototype.defeat= function defeat(who){
     if(this.target===who){
-	return new ReturnToState("Y");
+	return new ReturnToState(this.mission);
     }else{
 	return this;
     }
@@ -38,15 +38,17 @@ ToDefeatState.prototype.defeat= function defeat(who){
 /*
  ReturnToState
  */
-var ReturnToState = function ReturnToState(target,reward) {
-    this.target = target;
+var ReturnToState = function ReturnToState(mission) {
+    this.target = mission.returnTo;
+    this.mission = mission;
 };
 
 util.inherits(ReturnToState,BaseState);
 
 ReturnToState.prototype.returnTo = function returnTo(who){
     if(this.target===who){
-	return new DoneState();
+	this.mission.player.money+=this.mission.reward;
+	return new DoneState(this.mission);
     }else{
 	return this;
     }
@@ -61,11 +63,10 @@ var DoneState = function DoneState(){
 
 DoneState.prototype.isDone = function(){
     return true;
-}
-
-var generateStory = function generateStory(){
-    return new ToDefeatState("X");
 };
 
-module.exports.generateStory = generateStory;
+var generateDefeatStory = function (mission){
+    return new ToDefeatState(mission);
+};
 
+module.exports.generateStory = generateDefeatStory;
